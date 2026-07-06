@@ -15,23 +15,42 @@ class WorldModelBase(object):
 
 class StateActionBase(object):
     """
-    Template class for all state-action classes
+    Parent class for all state-action (sub)classes
     """
 
     def __init__(self, world_model):
+        """
+        Parent class for all state-action (sub)classes
+                
+        =INPUT=
+            world_model - class instance
+                See docstring of StateMachine
+        """
         self.world = world_model
         return
     
     def guard(self):
+        """
+        State entry is possible when returns True
+        """
         return False
     
     def on_entry(self):
+        """
+        Executed once, upon entry from another state
+        """
         return
     
     def update(self):
+        """
+        Executed for as long as in this state
+        """
         return
     
     def on_exit(self):
+        """
+        Executed once, upon exit to another state
+        """
         return
 
 
@@ -44,8 +63,12 @@ class StateMachine(object):
         """
         =INPUT=
             world_model - class instance
-                Must contain an .update() method that updates the "world" state,
-                after which it must remain fixed until the next update call.
+                Instance of user-defined WorldModel class. All instances of
+                StateActionBase must gain access to the same world_model instance.
+                The world_model instance must have at least an .update() method
+                that takes no inputs. This method may copy the latest sensor
+                values to attributes of world_model, to remain constant during
+                the execution of a state action.
         """
 
         self.world = world_model
@@ -83,6 +106,11 @@ class StateMachine(object):
     def step(self):
         """
         To be executed every time step
+        Calls .update() of world model before executing a state step.
+
+        # ASSUMPTIONS
+            Only one guard can be true at a time. If two evaluate to true,
+            the state of the first evaluated one is entered.
         """
 
         # Update world model to act on

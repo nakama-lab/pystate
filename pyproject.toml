@@ -6,10 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "reframectrl"
 version = "1.0.0"
 authors = [
-    {name = "A.H.G.Overbeek", email = "a.h.g.overbeek@utwente.nl"},
     {name = "M.Vlutters", email = "m.vlutters@utwente.nl"}
 ]
-description="Wrench control using interaction frames."
+description="Basic state machine in pure python."
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers=[
