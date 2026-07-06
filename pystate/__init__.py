@@ -1,1 +1,1 @@
-from state_machine._sm_ import StateMachine, StateActionBase
+from pystate._sm_ import StateMachine, StateActionBase
