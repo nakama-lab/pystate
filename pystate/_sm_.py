@@ -26,7 +26,7 @@ class StateActionBase(object):
             world_model - class instance
                 See docstring of StateMachine
         """
-        self.world = world_model
+        self.world_model = world_model
         return
     
     def guard(self):
@@ -71,7 +71,7 @@ class StateMachine(object):
                 the execution of a state action.
         """
 
-        self.world = world_model
+        self.world_model = world_model
         self.state_actions = {}
         self.current_state = None
         return
@@ -114,7 +114,7 @@ class StateMachine(object):
         """
 
         # Update world model to act on
-        self.world.update()
+        self.world_model.update()
 
         # Check all guards. It is assumed at most 1 gaurd can be true at a time.
         # Arbitration is left to the state definitions. Not resolved here.
