@@ -87,7 +87,7 @@ class StateMachine(object):
             state_objects - class instance
                 Instance of (a subclass of) StateActionBase.
         """
-        self.state_actions.update({state_name, state_object})
+        self.state_actions.update({state_name: state_object})
         if self.current_state is None:
             self.current_state = state_name
         return
