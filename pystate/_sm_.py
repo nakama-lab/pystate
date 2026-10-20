@@ -7,6 +7,8 @@ class WorldModelBase(object):
     This is a stub.
     """
     def __init__(self):
+        # State_actions keeps track of the states
+        self.current_state = None
         return
 
     def update(self):
@@ -70,10 +72,8 @@ class StateMachine(object):
                 values to attributes of world_model, to remain constant during
                 the execution of a state action.
         """
-
         self.world_model = world_model
         self.state_actions = {}
-        self.current_state = None
         return
     
 
@@ -88,8 +88,8 @@ class StateMachine(object):
                 Instance of (a subclass of) StateActionBase.
         """
         self.state_actions.update({state_name: state_object})
-        if self.current_state is None:
-            self.current_state = state_name
+        if self.world_model.current_state is None:
+            self.world_model.current_state = state_name
         return
 
 
