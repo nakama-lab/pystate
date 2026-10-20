@@ -123,17 +123,17 @@ class StateMachine(object):
             if state_object.guard():
 
                 # Perform exit action of previous state
-                self.state_actions[self.current_state].on_exit()
+                self.state_actions[self.world_model.current_state].on_exit()
 
                 # Perform transition
-                self.status.current_state = state_name
+                self.world_model.current_state = state_name
 
                 # Execute entry action of new state
-                self.state_actions[self.current_state].on_entry()
+                self.state_actions[self.world_model.current_state].on_entry()
 
                 break
             
         # Execute the action of the current state
-        self.state_actions[self.current_state].update()
+        self.state_actions[self.world_model.current_state].update()
 
         return
