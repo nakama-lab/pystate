@@ -73,6 +73,12 @@ class StateMachine(object):
                 the execution of a state action.
         """
         self.world_model = world_model
+        
+        if not hasattr(world_model, "current_state"):
+            self.world_model.current_state = None
+            self.current_state = None
+        else:
+            self.current_state = self.world_model.current_state
         self.state_actions = {}
         return
     
@@ -88,7 +94,8 @@ class StateMachine(object):
                 Instance of (a subclass of) StateActionBase.
         """
         self.state_actions.update({state_name: state_object})
-        if self.world_model.current_state is None:
+        if self.current_state is None:
+            self.current_state = state_name
             self.world_model.current_state = state_name
         return
 
@@ -123,17 +130,18 @@ class StateMachine(object):
             if state_object.guard():
 
                 # Perform exit action of previous state
-                self.state_actions[self.world_model.current_state].on_exit()
+                self.state_actions[self.current_state].on_exit()
 
                 # Perform transition
+                self.current_state = state_name
                 self.world_model.current_state = state_name
 
                 # Execute entry action of new state
-                self.state_actions[self.world_model.current_state].on_entry()
+                self.state_actions[self.current_state].on_entry()
 
                 break
             
         # Execute the action of the current state
-        self.state_actions[self.world_model.current_state].update()
+        self.state_actions[self.current_state].update()
 
         return
